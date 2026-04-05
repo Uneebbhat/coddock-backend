@@ -6,13 +6,9 @@ import morgan from "morgan";
 import chalk from "chalk";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
-import dbConnect from "./services/dbConnect";
-import userRoutes from "./routes/userRoutes.routes";
 import ErrorHandler from "./utils/ErrorHandler";
 
 const app: Application = express();
-
-dbConnect();
 
 // Helmet middleware for adding security headers to all responses
 app.use(helmet());
@@ -20,7 +16,7 @@ app.use(helmet());
 const morganFormat = (
   tokens: morgan.TokenIndexer<Request, Response>,
   req: Request,
-  res: Response
+  res: Response,
 ): string => {
   const status = Number(tokens.status(req, res));
 
@@ -39,7 +35,7 @@ const morganFormat = (
 
     // Protocol and Status - cyan
     chalk.cyan(
-      `HTTP/${tokens["http-version"](req, res)} ${tokens.status(req, res)}`
+      `HTTP/${tokens["http-version"](req, res)} ${tokens.status(req, res)}`,
     ),
 
     // Response time - cyan
@@ -70,7 +66,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-app.use("/api", userRoutes);
+// app.use("/api");
 
 app.get("/", (req, res) => {
   res.send("Hello");
