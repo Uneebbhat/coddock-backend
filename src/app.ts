@@ -7,6 +7,7 @@ import chalk from "chalk";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import ErrorHandler from "./utils/ErrorHandler";
+import authRoute from "./feature/auth/auth.route";
 
 const app: Application = express();
 
@@ -66,7 +67,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-// app.use("/api");
+app.use("/api", authRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello");

@@ -5,6 +5,7 @@ const setCookies = (res: Response, token: string) => {
     httpOnly: true,
     secure: true,
     sameSite: "strict",
+    path: "/",
   });
 };
 

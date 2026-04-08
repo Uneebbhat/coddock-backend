@@ -3,9 +3,9 @@ import { JWT_SECRET } from "../config/constants";
 import ErrorHandler from "../utils/ErrorHandler";
 import { Response } from "express";
 
-const generateToken = (res: Response, payload: any) => {
+const generateToken = (payload: any) => {
   if (!JWT_SECRET) {
-    ErrorHandler.send(res, 500, "JWT Secret is not defined.");
+    throw new Error("JWT Secret is not defined.");
   }
 
   const token = jwt.sign(
@@ -18,7 +18,7 @@ const generateToken = (res: Response, payload: any) => {
     JWT_SECRET as string,
     {
       expiresIn: "7d",
-    }
+    },
   );
 
   return token;
